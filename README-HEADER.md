@@ -16,7 +16,13 @@ More information can be found on these install methods and more in [the document
 
 This module provisions an ECR repository.
 
-By default, the repository will be created with a 50 image retention policy, be `AES256` encrypted and allow access from Lambda. Use the optional variables provided in this module to adjust those configurations.
+By default, the repository will be created with 
+- sharedtools: 5 images  
+- dev: 10 images         
+- qa: 15 images          
+- staging: 20 images    
+- prod: 35 images 
+ retention policy, be `AES256` encrypted and allow access from Lambda. Use the optional variables provided in this module to adjust those configurations.
 
 Integrate this module like so:
 

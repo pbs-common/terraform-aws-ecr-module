@@ -20,6 +20,27 @@ variable "images_to_retain" {
   }
 }
 
+variable "environment_images_retention" {
+  description = "Number of images to retain based on environment"
+  type        = map(number)
+  default = {
+    sharedtools = 5
+    dev         = 10
+    qa          = 15
+    staging     = 20
+    prod        = 35
+  }
+}
+
+variable "environment" {
+  description = "Environment for the ECR repository"
+  type        = string
+  validation {
+    condition     = contains(["sharedtools", "dev", "qa", "staging", "prod"], var.environment)
+    error_message = "Environment must be one of: sharedtools, dev, qa, staging, prod"
+  }
+}
+
 variable "image_tag_mutability" {
   description = "(optional) Image tag mutability (allowance for a tag be reassigned to another image)"
   default     = "IMMUTABLE"
