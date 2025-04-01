@@ -16,11 +16,11 @@ locals {
   tags = merge({ for k, v in local.defaulted_tags : k => v if lookup(data.aws_default_tags.common_tags.tags, k, "") != v })
    # Default retention values per environment
   default_retention_values = {
-    sharedtools = 10
+    sharedtools = 5
     dev         = 10  
     qa          = 15   
     staging     = 20   
-    prod        = 40   
+    prod        = 35   
   }
 
   # Calculate the effective number of images to retain
