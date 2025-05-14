@@ -5,7 +5,7 @@
 ### Using the Repo Source
 
 ```hcl
-github.com/pbs/terraform-aws-ecr-module?ref=0.3.27
+github.com/pbs/terraform-aws-ecr-module?ref=x.y.z
 ```
 
 ### Alternative Installation Methods
@@ -16,13 +16,13 @@ More information can be found on these install methods and more in [the document
 
 This module provisions an ECR repository.
 
-By default, the repository will be created with a 50 image retention policy, it will be `AES256` encrypted, and it will allow access from Lambda. Use the optional variables provided in this module to adjust those configurations.
+By default, the repository will be created with a 50 image retention policy, be `AES256` encrypted and allow access from Lambda. Use the optional variables provided in this module to adjust those configurations.
 
 Integrate this module like so:
 
 ```hcl
 module "ecr" {
-  source = "github.com/pbs/terraform-aws-ecr-module?ref=0.3.27"
+  source = "github.com/pbs/terraform-aws-ecr-module?ref=x.y.z"
 
   # Tagging Parameters
   organization = var.organization
@@ -38,7 +38,7 @@ module "ecr" {
 
 If this repo is added as a subtree, then the version of the module should be close to the version shown here:
 
-`0.3.27`
+`x.y.z`
 
 Note, however that subtrees can be altered as desired within repositories.
 
