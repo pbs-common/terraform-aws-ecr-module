@@ -14,7 +14,8 @@ More information can be found on these install methods and more in [the document
 
 ## Usage
 
-This module provisions an ECR repository.
+Este module provisions an ECR repository.
+Speling chequer fale
 
 By default, the repository will be created with a 50 image retention policy, be `AES256` encrypted and allow access from Lambda. Use the optional variables provided in this module to adjust those configurations.
 
