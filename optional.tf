@@ -12,11 +12,21 @@ variable "scan_on_push" {
 
 variable "images_to_retain" {
   description = "(optional) Number of most recent images to retain (set to null for no retention policy)"
-  default     = 50
+  default     = null
   type        = number
   validation {
     condition     = var.images_to_retain == null || try(var.images_to_retain > 0, false)
     error_message = "Images_to_retain must be a number greater than zero or null."
+  }
+}
+
+variable "environment_images_retention" {
+  description = "(optional) Number of images to retain based on environment. If set, takes precedence over images_to_retain."
+  type        = string
+  default     = "prod"
+  validation {
+    condition     = contains(["sharedtools", "dev", "qa", "staging", "prod"], var.environment_images_retention)
+    error_message = "Environment images retention must be one of: sharedtools, dev, qa, staging, prod"
   }
 }
 
