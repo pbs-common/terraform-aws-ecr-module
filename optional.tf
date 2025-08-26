@@ -12,7 +12,7 @@ variable "scan_on_push" {
 
 variable "images_to_retain" {
   description = "(optional) Number of most recent images to retain (set to null for no retention policy)"
-  default     = 50
+  default     = null
   type        = number
   validation {
     condition     = var.images_to_retain == null || try(var.images_to_retain > 0, false)
@@ -21,23 +21,12 @@ variable "images_to_retain" {
 }
 
 variable "environment_images_retention" {
-  description = "Number of images to retain based on environment"
-  type        = map(number)
-  default = {
-    sharedtools = 5
-    dev         = 10
-    qa          = 15
-    staging     = 20
-    prod        = 35
-  }
-}
-
-variable "environment" {
-  description = "Environment for the ECR repository"
+  description = "(optional) Number of images to retain based on environment. If set, takes precedence over images_to_retain."
   type        = string
+  default     = "prod"
   validation {
-    condition     = contains(["sharedtools", "dev", "qa", "staging", "prod"], var.environment)
-    error_message = "Environment must be one of: sharedtools, dev, qa, staging, prod"
+    condition     = contains(["sharedtools", "dev", "qa", "staging", "prod"], var.environment_images_retention)
+    error_message = "Environment images retention must be one of: sharedtools, dev, qa, staging, prod"
   }
 }
 
