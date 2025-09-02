@@ -5,7 +5,7 @@
 ### Using the Repo Source
 
 ```hcl
-github.com/pbs/terraform-aws-ecr-module?ref=0.3.28
+github.com/pbs-common/terraform-aws-ecr-module?ref=0.3.28
 ```
 
 ### Alternative Installation Methods
