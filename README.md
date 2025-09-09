@@ -5,7 +5,7 @@
 ### Using the Repo Source
 
 ```hcl
-github.com/pbs/terraform-aws-ecr-module?ref=x.y.z
+github.com/pbs/terraform-aws-ecr-module?ref=0.3.30
 ```
 
 ### Alternative Installation Methods
@@ -28,7 +28,7 @@ Integrate this module like so:
 
 ```hcl
 module "ecr" {
-  source = "github.com/pbs/terraform-aws-ecr-module?ref=x.y.z"
+  source = "github.com/pbs/terraform-aws-ecr-module?ref=0.3.30"
 
   # Tagging Parameters
   organization = var.organization
@@ -44,7 +44,7 @@ module "ecr" {
 
 If this repo is added as a subtree, then the version of the module should be close to the version shown here:
 
-`x.y.z`
+`0.3.30`
 
 Note, however that subtrees can be altered as desired within repositories.
 
