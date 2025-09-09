@@ -20,16 +20,6 @@ variable "images_to_retain" {
   }
 }
 
-variable "environment_images_retention" {
-  description = "(optional) Number of images to retain based on environment. If set, takes precedence over images_to_retain."
-  type        = string
-  default     = "prod"
-  validation {
-    condition     = contains(["sharedtools", "dev", "qa", "staging", "prod"], var.environment_images_retention)
-    error_message = "Environment images retention must be one of: sharedtools, dev, qa, staging, prod"
-  }
-}
-
 variable "image_tag_mutability" {
   description = "(optional) Image tag mutability (allowance for a tag be reassigned to another image)"
   default     = "IMMUTABLE"
