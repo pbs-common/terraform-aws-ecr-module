@@ -5,7 +5,7 @@
 ### Using the Repo Source
 
 ```hcl
-github.com/pbs/terraform-aws-ecr-module?ref=0.3.30
+github.com/pbs/terraform-aws-ecr-module?ref=x.y.z
 ```
 
 ### Alternative Installation Methods
@@ -28,7 +28,7 @@ Integrate this module like so:
 
 ```hcl
 module "ecr" {
-  source = "github.com/pbs/terraform-aws-ecr-module?ref=0.3.30"
+  source = "github.com/pbs/terraform-aws-ecr-module?ref=x.y.z"
 
   # Tagging Parameters
   organization = var.organization
@@ -44,7 +44,7 @@ module "ecr" {
 
 If this repo is added as a subtree, then the version of the module should be close to the version shown here:
 
-`0.3.30`
+`x.y.z`
 
 Note, however that subtrees can be altered as desired within repositories.
 
@@ -60,14 +60,14 @@ Below is automatically generated documentation on this Terraform module using [t
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.2 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.13.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.24.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.15.0 |
 
 ## Modules
 
@@ -92,11 +92,12 @@ No modules.
 | <a name="input_repo"></a> [repo](#input\_repo) | Tag used to point to the repo using this module | `string` | n/a | yes |
 | <a name="input_allow_lambda_access"></a> [allow\_lambda\_access](#input\_allow\_lambda\_access) | (optional) Allow Lambda access to ECR | `bool` | `true` | no |
 | <a name="input_create_ecr_policy"></a> [create\_ecr\_policy](#input\_create\_ecr\_policy) | (optional) Create ECR policy | `bool` | `true` | no |
-| <a name="input_encryption_configuration"></a> [encryption\_configuration](#input\_encryption\_configuration) | (optional) Encryption configuration. Set `encryption_type` to `KMS` to use KMS encryption. Set `kms_key_arn` to the ARN of the KMS key to use. Set `encryption_type` to `AES256` to use AES256 encryption. | <pre>object({<br>    encryption_type = string<br>    kms_key_arn     = optional(string)<br>  })</pre> | <pre>{<br>  "encryption_type": "AES256",<br>  "kms_key_arn": null<br>}</pre> | no |
+| <a name="input_encryption_configuration"></a> [encryption\_configuration](#input\_encryption\_configuration) | (optional) Encryption configuration. Set `encryption_type` to `KMS` to use KMS encryption. Set `kms_key_arn` to the ARN of the KMS key to use. Set `encryption_type` to `AES256` to use AES256 encryption. | <pre>object({<br/>    encryption_type = string<br/>    kms_key_arn     = optional(string)<br/>  })</pre> | <pre>{<br/>  "encryption_type": "AES256",<br/>  "kms_key_arn": null<br/>}</pre> | no |
 | <a name="input_force_delete"></a> [force\_delete](#input\_force\_delete) | (optional) Force delete ECR repository even if it has images in it | `bool` | `false` | no |
 | <a name="input_image_tag_mutability"></a> [image\_tag\_mutability](#input\_image\_tag\_mutability) | (optional) Image tag mutability (allowance for a tag be reassigned to another image) | `string` | `"IMMUTABLE"` | no |
 | <a name="input_images_to_retain"></a> [images\_to\_retain](#input\_images\_to\_retain) | (optional) Number of most recent images to retain (set to null for no retention policy) | `number` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | (optional) Name of the ECR repository (defaults to product if null) | `string` | `null` | no |
+| <a name="input_owner"></a> [owner](#input\_owner) | Tag used to group resources according to product | `string` | `"plops"` | no |
 | <a name="input_scan_on_push"></a> [scan\_on\_push](#input\_scan\_on\_push) | (optional) Security scan on push | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Extra tags | `map(string)` | `{}` | no |
 
