@@ -18,8 +18,8 @@ variable "product" {
 
 variable "owner" {
   description = "Tag used to group resources according to product"
-  type = string
-  default = "plops"
+  type        = string
+  default     = "plops"
 
   validation {
     condition     = can(regex("[a-z\\-]+", var.owner))
