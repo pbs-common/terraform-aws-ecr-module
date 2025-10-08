@@ -88,6 +88,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment (sharedtools, dev, qa, staging, prod) | `string` | n/a | yes |
 | <a name="input_organization"></a> [organization](#input\_organization) | Organization using this module. Used to prefix tags so that they are easily identified as being from your organization | `string` | n/a | yes |
+| <a name="input_owner"></a> [owner](#input\_owner) | Tag used to group resources according to product | `string` | n/a | yes |
 | <a name="input_product"></a> [product](#input\_product) | Tag used to group resources according to product | `string` | n/a | yes |
 | <a name="input_repo"></a> [repo](#input\_repo) | Tag used to point to the repo using this module | `string` | n/a | yes |
 | <a name="input_allow_lambda_access"></a> [allow\_lambda\_access](#input\_allow\_lambda\_access) | (optional) Allow Lambda access to ECR | `bool` | `true` | no |
@@ -97,7 +98,6 @@ No modules.
 | <a name="input_image_tag_mutability"></a> [image\_tag\_mutability](#input\_image\_tag\_mutability) | (optional) Image tag mutability (allowance for a tag be reassigned to another image) | `string` | `"IMMUTABLE"` | no |
 | <a name="input_images_to_retain"></a> [images\_to\_retain](#input\_images\_to\_retain) | (optional) Number of most recent images to retain (set to null for no retention policy) | `number` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | (optional) Name of the ECR repository (defaults to product if null) | `string` | `null` | no |
-| <a name="input_owner"></a> [owner](#input\_owner) | Tag used to group resources according to product | `string` | `"plops"` | no |
 | <a name="input_scan_on_push"></a> [scan\_on\_push](#input\_scan\_on\_push) | (optional) Security scan on push | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Extra tags | `map(string)` | `{}` | no |
 
