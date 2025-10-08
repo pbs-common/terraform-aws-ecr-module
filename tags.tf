@@ -18,7 +18,7 @@ variable "product" {
 
 variable "owner" {
   description = "Tag used to group resources according to product"
-
+  type = string
   default = "plops"
 
   validation {
