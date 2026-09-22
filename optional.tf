@@ -11,7 +11,7 @@ variable "scan_on_push" {
 }
 
 variable "images_to_retain" {
-  description = "(optional) Number of most recent images to retain (set to null for no retention policy)"
+  description = "(optional) Number of most recent images to retain. When null, the number defaults to the environment: 5 for sharedtools, 10 dev, 15 qa, 20 staging, 35 prod. A lifecycle policy is always created — retention is enforced on every repository this module manages, and cannot be switched off."
   default     = null
   type        = number
   validation {
@@ -58,4 +58,27 @@ variable "force_delete" {
   description = "(optional) Force delete ECR repository even if it has images in it"
   default     = false
   type        = bool
+}
+
+variable "extra_policy_statements" {
+  description = <<EOT
+(optional) Additional statements to merge into the generated repository policy, each a JSON-encoded IAM statement. Anything a repository policy can express lives in a statement, so this covers cross-account grants, conditions and deny rules alike. Set `allow_lambda_access = false` alongside it for a policy made up only of these statements.
+
+```hcl
+extra_policy_statements = [
+  jsonencode({
+    Sid       = "CrossAccountPull"
+    Effect    = "Allow"
+    Principal = { AWS = "arn:aws:iam::111122223333:root" }
+    Action    = ["ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"]
+  })
+]
+```
+EOT
+  default     = []
+  type        = list(string)
+  validation {
+    condition     = alltrue([for s in var.extra_policy_statements : can(jsondecode(s))])
+    error_message = "Each extra_policy_statements entry must be valid JSON."
+  }
 }
