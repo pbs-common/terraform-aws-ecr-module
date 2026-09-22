@@ -5,7 +5,7 @@
 ### Using the Repo Source
 
 ```hcl
-github.com/pbs/terraform-aws-ecr-module?ref=1.0.1
+github.com/pbs/terraform-aws-ecr-module?ref=x.y.z
 ```
 
 ### Alternative Installation Methods
@@ -28,7 +28,7 @@ Integrate this module like so:
 
 ```hcl
 module "ecr" {
-  source = "github.com/pbs/terraform-aws-ecr-module?ref=1.0.1"
+  source = "github.com/pbs/terraform-aws-ecr-module?ref=x.y.z"
 
   # Tagging Parameters
   organization = var.organization
@@ -40,11 +40,36 @@ module "ecr" {
 }
 ```
 
+### Retention
+
+A lifecycle policy is always created. Retention is enforced on every repository this module manages and cannot be switched off; `images_to_retain` only changes how many images are kept, defaulting to the per-environment numbers above.
+
+### Repository policy
+
+By default the repository policy carries a single statement allowing Lambda to pull images. `allow_lambda_access = false` drops it, and `create_ecr_policy = false` skips the policy altogether.
+
+Add to the policy with `extra_policy_statements`, a list of JSON-encoded IAM statements. Everything a repository policy can express lives in a statement, so this covers cross-account grants, conditions and deny rules alike:
+
+```hcl
+allow_lambda_access = false
+
+extra_policy_statements = [
+  jsonencode({
+    Sid       = "CrossAccountPull"
+    Effect    = "Allow"
+    Principal = { AWS = "arn:aws:iam::111122223333:root" }
+    Action    = ["ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"]
+  })
+]
+```
+
+A policy needs at least one statement to be valid, so switching off the Lambda statement without adding any of your own creates no policy rather than an empty one. See [the policy example](/examples/policy).
+
 ## Adding This Version of the Module
 
 If this repo is added as a subtree, then the version of the module should be close to the version shown here:
 
-`1.0.1`
+`x.y.z`
 
 Note, however that subtrees can be altered as desired within repositories.
 
@@ -67,7 +92,7 @@ Below is automatically generated documentation on this Terraform module using [t
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.35.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.62.0 |
 
 ## Modules
 
@@ -94,9 +119,10 @@ No modules.
 | <a name="input_allow_lambda_access"></a> [allow\_lambda\_access](#input\_allow\_lambda\_access) | (optional) Allow Lambda access to ECR | `bool` | `true` | no |
 | <a name="input_create_ecr_policy"></a> [create\_ecr\_policy](#input\_create\_ecr\_policy) | (optional) Create ECR policy | `bool` | `true` | no |
 | <a name="input_encryption_configuration"></a> [encryption\_configuration](#input\_encryption\_configuration) | (optional) Encryption configuration. Set `encryption_type` to `KMS` to use KMS encryption. Set `kms_key_arn` to the ARN of the KMS key to use. Set `encryption_type` to `AES256` to use AES256 encryption. | <pre>object({<br/>    encryption_type = string<br/>    kms_key_arn     = optional(string)<br/>  })</pre> | <pre>{<br/>  "encryption_type": "AES256",<br/>  "kms_key_arn": null<br/>}</pre> | no |
+| <a name="input_extra_policy_statements"></a> [extra\_policy\_statements](#input\_extra\_policy\_statements) | (optional) Additional statements to merge into the generated repository policy, each a JSON-encoded IAM statement. Anything a repository policy can express lives in a statement, so this covers cross-account grants, conditions and deny rules alike. Set `allow_lambda_access = false` alongside it for a policy made up only of these statements.<pre>hcl<br/>extra_policy_statements = [<br/>  jsonencode({<br/>    Sid       = "CrossAccountPull"<br/>    Effect    = "Allow"<br/>    Principal = { AWS = "arn:aws:iam::111122223333:root" }<br/>    Action    = ["ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"]<br/>  })<br/>]</pre> | `list(string)` | `[]` | no |
 | <a name="input_force_delete"></a> [force\_delete](#input\_force\_delete) | (optional) Force delete ECR repository even if it has images in it | `bool` | `false` | no |
 | <a name="input_image_tag_mutability"></a> [image\_tag\_mutability](#input\_image\_tag\_mutability) | (optional) Image tag mutability (allowance for a tag be reassigned to another image) | `string` | `"IMMUTABLE"` | no |
-| <a name="input_images_to_retain"></a> [images\_to\_retain](#input\_images\_to\_retain) | (optional) Number of most recent images to retain (set to null for no retention policy) | `number` | `null` | no |
+| <a name="input_images_to_retain"></a> [images\_to\_retain](#input\_images\_to\_retain) | (optional) Number of most recent images to retain. When null, the number defaults to the environment: 5 for sharedtools, 10 dev, 15 qa, 20 staging, 35 prod. A lifecycle policy is always created — retention is enforced on every repository this module manages, and cannot be switched off. | `number` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | (optional) Name of the ECR repository (defaults to product if null) | `string` | `null` | no |
 | <a name="input_scan_on_push"></a> [scan\_on\_push](#input\_scan\_on\_push) | (optional) Security scan on push | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Extra tags | `map(string)` | `{}` | no |
