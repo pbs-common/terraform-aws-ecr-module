@@ -5,7 +5,7 @@
 ### Using the Repo Source
 
 ```hcl
-github.com/pbs/terraform-aws-ecr-module?ref=x.y.z
+github.com/pbs/terraform-aws-ecr-module?ref=1.0.2
 ```
 
 ### Alternative Installation Methods
@@ -28,7 +28,7 @@ Integrate this module like so:
 
 ```hcl
 module "ecr" {
-  source = "github.com/pbs/terraform-aws-ecr-module?ref=x.y.z"
+  source = "github.com/pbs/terraform-aws-ecr-module?ref=1.0.2"
 
   # Tagging Parameters
   organization = var.organization
@@ -69,7 +69,7 @@ A policy needs at least one statement to be valid, so switching off the Lambda s
 
 If this repo is added as a subtree, then the version of the module should be close to the version shown here:
 
-`x.y.z`
+`1.0.2`
 
 Note, however that subtrees can be altered as desired within repositories.
 
